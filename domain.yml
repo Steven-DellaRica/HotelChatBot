@@ -1,0 +1,70 @@
+version: "3.1"
+
+intents:
+  - salutation
+  - ask_options
+  - new_reservation
+  - cancel_reservation
+  - check_reservation
+  - day_menu
+  - allergen_info
+  - view_menu
+  - provide_date
+  - provide_guests
+  - provide_name
+  - provide_phone
+  - provide_resa_code
+  - confirm
+  - goodbye
+  - au_revoir
+  - confirmer
+  - demande_reservation
+  - selection_ville
+  - selection_date
+  - selection_nuits
+
+entities:
+  - date
+  - ville
+  - nuits
+
+slots:
+  slot_date:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: date
+  slot_nuits:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: nuits
+      - type: from_text
+  slot_ville:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: ville
+
+responses:
+  utter_salutation:
+    - text: "Bonjour, que puis-je faire pour vous ?"
+    - text: "Bonjour, comment puis-je vous aider ?"
+  utter_au_revoir:
+    - text: "Au revoir"
+
+  utter_choix_de_la_ville:
+    - text: "À quel hôtel souhaitez vous résider ?"
+  utter_date_de_reservation:
+    - text: "À quelle date souhaitez-vous réserver votre chambre d'hôtel ? (donnez la date sous la forme DD/MM/YY)"
+  utter_nombre_de_nuits:
+    - text: "Vous souhaitez réserver combien de nuits ?"
+
+  utter_confirmation_reservation:
+    - text: "Très bien. Vous souhaitez réserver une chambre dans l'hôtel de {slot_ville}, pour {slot_nuits}, le {slot_date}. Est-ce correct ?"
+  utter_enregistrement_reservation:
+    - text: "Votre réservation a bien été enregistrée. Merci !"
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

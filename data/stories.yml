@@ -1,0 +1,61 @@
+version: "3.1"
+
+stories:
+
+- story: Nouvelle réservation
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: ask_options
+    - action: utter_show_options
+    - intent: new_reservation
+    - action: utter_ask_date
+    - intent: provide_date
+    - action: utter_ask_guests
+    - intent: provide_guests
+    - action: check_availability  # Action personnalisée pour vérifier la disponibilité
+    - slot_was_set:
+        - availability: possible
+    - action: utter_ask_name
+    - intent: provide_name
+    - action: utter_ask_phone
+    - intent: provide_phone
+    - action: generate_resa_code  # Action pour générer un code de réservation
+    - action: utter_reservation_confirmed
+    - intent: goodbye
+    - action: utter_goodbye
+
+- story: Annulation de réservation
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: ask_options
+    - action: utter_show_options
+    - intent: cancel_reservation
+    - action: utter_ask_resa_code
+    - intent: provide_resa_code
+    - action: validate_resa_code  # Action personnalisée pour valider le code de réservation
+    - slot_was_set:
+        - resa_code_valid: True
+    - action: utter_confirm_cancel
+    - intent: confirm
+    - action: cancel_reservation  # Action pour annuler la réservation
+    - action: utter_reservation_cancelled
+    - intent: goodbye
+    - action: utter_goodbye
+
+- story: Information sur une réservation
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: ask_options
+    - action: utter_show_options
+    - intent: check_reservation
+    - action: utter_ask_resa_code
+    - intent: provide_resa_code
+    - action: validate_resa_code
+    - slot_was_set:
+        - resa_code_valid: True
+    - action: utter_resa_info  # Action pour afficher les détails de la réservation
+    - intent: goodbye
+    - action: utter_goodbye

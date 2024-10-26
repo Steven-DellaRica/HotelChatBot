@@ -1,0 +1,77 @@
+version: "3.1"
+
+nlu:
+  - intent: salutation
+    examples: |
+      - salut
+      - bonjour
+      - coucou
+      - bonsoir
+      - bon après-midi
+
+  - intent: au_revoir
+    examples: |
+      - à plus
+      - au revoir
+      - à plus tard
+      - bonne nuit
+      - bonne journée
+      - à la prochaine
+
+  - intent: confirmer
+    examples: |
+      - oui
+      - oui, c'est cela
+      - en effet
+      - bien sûr
+      - ça semble bien
+      - correct
+
+  - intent: demande_reservation
+    examples: |
+      - Je souhaite réserver une chambre d'hôtel
+      - J'aimerais faire une réservation
+      - Pouvez-vous m'aider à réserver une chambre ?
+
+  - intent: selection_ville
+    examples: |
+      - [Nantes](ville)
+      - Je vais séjourner à [Lyon](ville)
+      - Je serai à [Paris](ville) ce jour là
+
+  - intent: selection_nuits
+    examples: |
+      - [5 nuits](nuits)
+      - je compte rester [2 nuits](nuits)
+      - [3 nuits](nuits)
+
+  - intent: selection_date
+    examples: |
+      - le [01/02](date)
+      - [17/04/24](date)
+
+  - lookup: ville
+    examples: |
+      - Paris
+      - Lyon
+      - Nantes
+      - Marseille
+      - Bordeaux
+      - Lille
+      - Toulouse
+
+  - lookup: nuits
+    examples: |
+      - une nuit
+      - deux nuits
+      - trois nuits
+      - 5 nuits
+      - Je vais rester 3 nuits
+      - Juste cette nuit
+
+  - lookup: date
+    examples: |
+      - le 17/12/2024
+      - 17/04/24
+      - 03/02
+      - à partir du 1/03
