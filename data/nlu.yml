@@ -1,77 +1,81 @@
 version: "3.1"
 
 nlu:
-  - intent: salutation
-    examples: |
-      - salut
-      - bonjour
-      - coucou
-      - bonsoir
-      - bon après-midi
+- intent: greet
+  examples: |
+    - Bonjour
+    - Salut
+    - Coucou
+    - Salutations
 
-  - intent: au_revoir
-    examples: |
-      - à plus
-      - au revoir
-      - à plus tard
-      - bonne nuit
-      - bonne journée
-      - à la prochaine
+- intent: request_reservation
+  examples: |
+    - Je veux réserver une table
+    - J'aimerais réserver pour ce soir
+    - Je veux une réservation
 
-  - intent: confirmer
-    examples: |
-      - oui
-      - oui, c'est cela
-      - en effet
-      - bien sûr
-      - ça semble bien
-      - correct
+- intent: provide_date
+  examples: |
+    - Je veux réserver [ce soir](date)
+    - J'aimerais réserver [demain](date)
+    - Pour le [7 janvier](date)
+    - La date du [27 mars](date)
 
-  - intent: demande_reservation
-    examples: |
-      - Je souhaite réserver une chambre d'hôtel
-      - J'aimerais faire une réservation
-      - Pouvez-vous m'aider à réserver une chambre ?
+- intent: provide_people_number
+  examples: |
+    - Nous serons [4 personnes](number_of_people)
+    - Une réservation pour [2 personnes](number_of_people)
+    - Il y aura [3 personnes](number_of_people)
 
-  - intent: selection_ville
-    examples: |
-      - [Nantes](ville)
-      - Je vais séjourner à [Lyon](ville)
-      - Je serai à [Paris](ville) ce jour là
+- intent: provide_name
+  examples: |
+    - Au nom de [Michel](name)
+    - La réservation est au nom de [Dupont](name)
+    - Mon nom est [Jean](name)
 
-  - intent: selection_nuits
-    examples: |
-      - [5 nuits](nuits)
-      - je compte rester [2 nuits](nuits)
-      - [3 nuits](nuits)
+- intent: provide_phone_number
+  examples: |
+    - Mon numéro est [0601020304](phone_number)
+    - Voici mon numéro : [0708091011](phone_number)
+    - Vous pouvez me joindre au [0602030405](phone_number)
 
-  - intent: selection_date
-    examples: |
-      - le [01/02](date)
-      - [17/04/24](date)
+- intent: provide_cancel_code
+  examples: |
+    - Mon code de réservation est [ABC123](code_resa)
 
-  - lookup: ville
-    examples: |
-      - Paris
-      - Lyon
-      - Nantes
-      - Marseille
-      - Bordeaux
-      - Lille
-      - Toulouse
+- intent: provide_info_code
+  examples: |
+    - Mon code de réservation est [ABC123](code_resa)
 
-  - lookup: nuits
-    examples: |
-      - une nuit
-      - deux nuits
-      - trois nuits
-      - 5 nuits
-      - Je vais rester 3 nuits
-      - Juste cette nuit
+- intent: cancel_reservation
+  examples: |
+    - J'aimerais annuler ma réservation
+    - Annulez ma réservation avec le code [ABC123](code_resa)
+    - Je souhaite annuler la réservation
 
-  - lookup: date
-    examples: |
-      - le 17/12/2024
-      - 17/04/24
-      - 03/02
-      - à partir du 1/03
+- intent: request_reservation_info
+  examples: |
+    - Peux-tu me donner les informations de ma réservation
+    - J'aimerais obtenir des informations sur ma réservation
+    - Détails de ma réservation avec le code [ABC123](code_resa)
+
+- intent: ask_menu
+  examples: |
+    - Quel est le menu du jour ?
+    - Montre-moi le menu du jour
+    - Que proposez-vous aujourd'hui ?
+
+- intent: ask_allergens
+  examples: |
+    - Y a-t-il des allergènes dans le menu ?
+    - Quels sont les allergènes ?
+    - Y a-t-il des plats sans allergènes ?
+
+
+- intent: affirm
+  examples: |
+    - Oui
+    - D'accord
+    - Bien sûr
+    - Tout à fait
+    - En effet

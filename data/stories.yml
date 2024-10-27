@@ -1,61 +1,203 @@
 version: "3.1"
 
 stories:
+  - story: Réservation de restaurant avec informations complètes
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: request_reservation
+      - action: utter_ask_reservation_date
+      - intent: provide_date
+        entities:
+          - date: "15 février"
+      - action: utter_ask_number_of_people
+      - intent: provide_people_number
+        entities:
+          - number_of_people: "4"
+      - action: utter_ask_name
+      - intent: provide_name
+        entities:
+          - name: "Dupont"
+      - action: utter_ask_phone_number
+      - intent: provide_phone_number
+        entities:
+          - phone_number: "0601020304"
+      - action: action_confirm_reservation
+      - action: generate_resa_code
+      - intent: affirm
+      - action: utter_reservation_confirmed
+      - action: utter_goodbye
 
-- story: Nouvelle réservation
-  steps:
-    - intent: greet
-    - action: utter_greet
-    - intent: ask_options
-    - action: utter_show_options
-    - intent: new_reservation
-    - action: utter_ask_date
-    - intent: provide_date
-    - action: utter_ask_guests
-    - intent: provide_guests
-    - action: check_availability  # Action personnalisée pour vérifier la disponibilité
-    - slot_was_set:
-        - availability: possible
-    - action: utter_ask_name
-    - intent: provide_name
-    - action: utter_ask_phone
-    - intent: provide_phone
-    - action: generate_resa_code  # Action pour générer un code de réservation
-    - action: utter_reservation_confirmed
-    - intent: goodbye
-    - action: utter_goodbye
+  - story: Réservation de restaurant avec informations incomplètes
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: request_reservation
+      - action: utter_ask_reservation_date
+      - intent: provide_date
+        entities:
+          - date: "12 mars"
+      - action: utter_ask_number_of_people
+      - intent: provide_people_number
+        entities:
+          - number_of_people: "2"
+      - action: action_confirm_reservation
+      - intent: deny
+      - action: utter_ask_name
+      - intent: provide_name
+        entities:
+          - name: "Martin"
+      - action: utter_ask_phone_number
+      - intent: provide_phone_number
+        entities:
+          - phone_number: "0708091011"
+      - action: action_confirm_reservation
+      - action: generate_resa_code
+      - intent: affirm
+      - action: utter_reservation_confirmed
+      - action: utter_goodbye
 
-- story: Annulation de réservation
-  steps:
-    - intent: greet
-    - action: utter_greet
-    - intent: ask_options
-    - action: utter_show_options
-    - intent: cancel_reservation
-    - action: utter_ask_resa_code
-    - intent: provide_resa_code
-    - action: validate_resa_code  # Action personnalisée pour valider le code de réservation
-    - slot_was_set:
-        - resa_code_valid: True
-    - action: utter_confirm_cancel
-    - intent: confirm
-    - action: cancel_reservation  # Action pour annuler la réservation
-    - action: utter_reservation_cancelled
-    - intent: goodbye
-    - action: utter_goodbye
+  - story: Annulation de réservation avec confirmation
+    steps:
+      - intent: cancel_reservation
+      - action: utter_ask_reservation_code
+      - intent: provide_cancel_code
+        entities:
+          - code_resa: "ABC123"
+      - action: action_cancel_reservation
+      - intent: affirm
+      - action: utter_reservation_cancelled
+      - action: utter_goodbye
 
-- story: Information sur une réservation
-  steps:
-    - intent: greet
-    - action: utter_greet
-    - intent: ask_options
-    - action: utter_show_options
-    - intent: check_reservation
-    - action: utter_ask_resa_code
-    - intent: provide_resa_code
-    - action: validate_resa_code
-    - slot_was_set:
-        - resa_code_valid: True
-    - action: utter_resa_info  # Action pour afficher les détails de la réservation
-    - intent: goodbye
-    - action: utter_goodbye
+  - story: Annulation de réservation sans confirmation
+    steps:
+      - intent: cancel_reservation
+      - action: utter_ask_reservation_code
+      - intent: provide_cancel_code
+        entities:
+          - code_resa: "ABC123"
+      - action: action_cancel_reservation
+      - intent: deny
+      - action: utter_goodbye
+
+  - story: Demande d'informations sur la réservation
+    steps:
+      - intent: request_reservation_info
+      - action: utter_ask_reservation_code
+      - intent: provide_info_code
+        entities:
+          - code_resa: "ABC123"
+      - action: action_reservation_info
+      - intent: affirm
+      - action: utter_reservation_info
+      - action: utter_goodbye
+
+  - story: Demande d'informations sur le menu
+    steps:
+      - intent: ask_menu
+      - action: utter_menu_of_the_day
+      - action: utter_goodbye
+
+  - story: Demande d'allergènes dans le menu
+    steps:
+      - intent: ask_allergens
+      - action: utter_allergens_info
+      - action: utter_goodbye
+
+  - story: Réservation avec changement de date
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: request_reservation
+      - action: utter_ask_reservation_date
+      - intent: provide_date
+        entities:
+          - date: "1er avril"
+      - action: utter_ask_number_of_people
+      - intent: provide_people_number
+        entities:
+          - number_of_people: "3"
+      - action: utter_ask_name
+      - intent: provide_name
+        entities:
+          - name: "Paul"
+      - action: utter_ask_phone_number
+      - intent: provide_phone_number
+        entities:
+          - phone_number: "0605060708"
+      - action: action_confirm_reservation
+      - intent: deny
+      - action: utter_ask_reservation_date
+      - intent: provide_date
+        entities:
+          - date: "3 avril"
+      - action: action_confirm_reservation
+      - intent: affirm
+      - action: utter_reservation_confirmed
+      - action: utter_goodbye
+
+  - story: Confirmation après correction du numéro de téléphone
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: request_reservation
+      - action: utter_ask_reservation_date
+      - intent: provide_date
+        entities:
+          - date: "20 mai"
+      - action: utter_ask_number_of_people
+      - intent: provide_people_number
+        entities:
+          - number_of_people: "5"
+      - action: utter_ask_name
+      - intent: provide_name
+        entities:
+          - name: "Louis"
+      - action: utter_ask_phone_number
+      - intent: provide_phone_number
+        entities:
+          - phone_number: "0601020304"
+      - action: action_confirm_reservation
+      - intent: deny
+      - action: utter_ask_phone_number
+      - intent: provide_phone_number
+        entities:
+          - phone_number: "0605060708"
+      - action: action_confirm_reservation
+      - intent: affirm
+      - action: utter_reservation_confirmed
+      - action: utter_goodbye
+
+  - story: Réservation et annulation immédiate
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: request_reservation
+      - action: utter_ask_reservation_date
+      - intent: provide_date
+        entities:
+          - date: "7 juin"
+      - action: utter_ask_number_of_people
+      - intent: provide_people_number
+        entities:
+          - number_of_people: "6"
+      - action: utter_ask_name
+      - intent: provide_name
+        entities:
+          - name: "Clara"
+      - action: utter_ask_phone_number
+      - intent: provide_phone_number
+        entities:
+          - phone_number: "0602030405"
+      - action: action_confirm_reservation
+      - intent: affirm
+      - action: utter_reservation_confirmed
+      - intent: cancel_reservation
+      - action: utter_ask_reservation_code
+      - intent: provide_cancel_code
+        entities:
+          - code_resa: "ABC123"
+      - action: action_cancel_reservation
+      - intent: affirm
+      - action: utter_reservation_cancelled
+      - action: utter_goodbye  

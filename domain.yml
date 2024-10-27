@@ -1,70 +1,99 @@
 version: "3.1"
 
 intents:
-  - salutation
-  - ask_options
-  - new_reservation
-  - cancel_reservation
-  - check_reservation
-  - day_menu
-  - allergen_info
-  - view_menu
+  - greet
+  - request_reservation
   - provide_date
-  - provide_guests
+  - provide_people_number
   - provide_name
-  - provide_phone
-  - provide_resa_code
-  - confirm
-  - goodbye
-  - au_revoir
-  - confirmer
-  - demande_reservation
-  - selection_ville
-  - selection_date
-  - selection_nuits
+  - provide_phone_number
+  - provide_reservation_code
+  - provide_cancel_code  
+  - provide_info_code
+  - cancel_reservation
+  - request_reservation_info
+  - ask_menu
+  - ask_allergens
+  - affirm
+  - deny
 
 entities:
   - date
-  - ville
-  - nuits
+  - number_of_people
+  - name
+  - phone_number
+  - code_resa
 
 slots:
-  slot_date:
+  date:
     type: text
     mappings:
       - type: from_entity
         entity: date
-  slot_nuits:
+
+  number_of_people:
     type: text
     mappings:
       - type: from_entity
-        entity: nuits
-      - type: from_text
-  slot_ville:
+        entity: number_of_people
+
+  name:
     type: text
     mappings:
       - type: from_entity
-        entity: ville
+        entity: name
+
+  phone_number:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: phone_number
+
+  code_resa:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: code_resa
 
 responses:
-  utter_salutation:
+  utter_greet:
     - text: "Bonjour, que puis-je faire pour vous ?"
-    - text: "Bonjour, comment puis-je vous aider ?"
-  utter_au_revoir:
-    - text: "Au revoir"
 
-  utter_choix_de_la_ville:
-    - text: "À quel hôtel souhaitez vous résider ?"
-  utter_date_de_reservation:
-    - text: "À quelle date souhaitez-vous réserver votre chambre d'hôtel ? (donnez la date sous la forme DD/MM/YY)"
-  utter_nombre_de_nuits:
-    - text: "Vous souhaitez réserver combien de nuits ?"
+  utter_ask_reservation_date:
+    - text: "Pour quelle date souhaitez-vous réserver ?"
 
-  utter_confirmation_reservation:
-    - text: "Très bien. Vous souhaitez réserver une chambre dans l'hôtel de {slot_ville}, pour {slot_nuits}, le {slot_date}. Est-ce correct ?"
-  utter_enregistrement_reservation:
-    - text: "Votre réservation a bien été enregistrée. Merci !"
+  utter_ask_number_of_people:
+    - text: "Combien de personnes seront présentes ?"
 
-session_config:
-  session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+  utter_ask_name:
+    - text: "Quel est votre nom pour la réservation ?"
+
+  utter_ask_phone_number:
+    - text: "Quel est votre numéro de téléphone ?"
+
+  utter_ask_reservation_code:
+    - text: "Pouvez-vous me donner le code de réservation ?"
+
+  utter_reservation_confirmed:
+    - text: "Votre réservation pour {number_of_people} personnes le {date} au nom de {name} a été confirmée."
+
+  utter_reservation_cancelled:
+    - text: "Votre réservation a été annulée avec succès."
+
+  utter_reservation_info:
+    - text: "Voici les informations sur votre réservation avec le code {code_resa}."
+
+  utter_menu_of_the_day:
+    - text: "Le menu du jour est : [menu ici]"
+
+  utter_allergens_info:
+    - text: "Voici la liste des allergènes : [allergènes ici]"
+
+  utter_goodbye:
+    - text: "Au revoir et à bientôt !"
+
+actions:
+  - action_confirm_reservation
+  - action_cancel_reservation
+  - action_reservation_info
+  - generate_resa_code
